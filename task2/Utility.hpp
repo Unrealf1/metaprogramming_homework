@@ -1,6 +1,6 @@
 #pragma once
 
-#include "typelist/TypeList.hpp"
+#include "Typelist/TypeList.hpp"
 
 template<typename T>
 class Type2Type {
@@ -35,8 +35,9 @@ class GenScatterHierarchy<NullType, Unit>
 
 template<class TList, template <class AtomicType, class Base> class Unit, class Root = EmptyType>
 class GenLinearHierarchy;
+
 template<class T1,class T2,template <class, class> class Unit,class Root>
-class GenLinearHierarchy<TypeList<T1, T2>, Unit, Root> : public Unit< T1, GenLinearHierarchy<T2, Unit, Root> > {};
+class GenLinearHierarchy<TypeList<T1, T2>, Unit, Root> : public Unit< T1, GenLinearHierarchy<TypeList<T2>, Unit, Root> > {};
 
 
 template<class T,template <class, class> class Unit,class Root>

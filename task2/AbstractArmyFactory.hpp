@@ -1,7 +1,8 @@
 #pragma once
 
-#include "AbstractFactory.hpp"
+#include "AbstractFactory/AbstractFactory.hpp"
 
-#include "Infantry.hpp"
+#include "Warriors/Infantry.hpp"
+#include "Warriors/Cavalry.hpp"
 
-typedef AbstractFactory<TypeList<Infantry> > AbstractArmyFactory;
+typedef AbstractFactory<TypeList<Infantry, Cavalry> > AbstractArmyFactory;

@@ -3,6 +3,7 @@
 #include "TypeList.hpp"
 #include "Utility.hpp"
 #include "Erase.hpp"
+#include "Reverse.hpp"
 
 #include <string>
 
@@ -57,29 +58,27 @@ namespace Append_tests
     static_assert(std::is_same<ThreeElem, new_ThreeElem>::value);
 }
 
-namespace Erase_tests
+namespace Reverse_tests
 {
-    using new_Empty = Erase<OneElem, int>::Result;
-    using new_OneElem = Erase<TwoElem, char>::Result;
-    //Erasing from start
-    using char_string = Erase<ThreeElem, int>::Result;
-    //Erasing from end
-    using char_list = Erase<char_string, std::string>::Result;
-    //Erasing from middle
-    using int_string = Erase<ThreeElem, char>::Result;
-    //Check that only the first entry is erased
-    using char_int = Erase<TypeList<int, char, int>, int>::Result;
-    //Just long list
-    using long_list = Erase<TypeList<char, float, bool, std::is_scalar<double>, int, std::pair<int, bool>, int>, int>::Result;
-    using long_list_right = TypeList<char, float, bool, std::is_scalar<double>, std::pair<int, bool>, int>;
+    using r_empty = Reverse<EmptyList>::Result;
+    using r_one = Reverse<OneElem>::Result;
+    using r_two = Reverse<TwoElem>::Result;
+    using r_three = Reverse<ThreeElem>::Result;
 
-    static_assert(std::is_same<EmptyList, new_Empty>::value);
-    static_assert(std::is_same<OneElem, new_OneElem>::value);
-    static_assert(std::is_same<char_string, TypeList<char, std::string>>::value);
-    static_assert(std::is_same<char_list, TypeList<char>>::value);
-    static_assert(std::is_same<int_string, TypeList<int, std::string>>::value);
-    static_assert(std::is_same<long_list, long_list_right>::value);
+    static_assert(std::is_same<EmptyList, r_empty>::value);
+    static_assert(std::is_same<OneElem, r_one>::value);
+    static_assert(std::is_same<r_two, TypeList<char, int>>::value);
+    static_assert(std::is_same<r_three, TypeList<std::string, char, int>>::value);
+}
 
-    // Если список пустой, то результат NullType
-    static_assert(std::is_same<NullType, Erase<EmptyList, int>::Result>::value);
+namespace TypeAt_tests
+{
+    static_assert(std::is_same<int, TypeAt<OneElem, 0>::Result>::value);
+
+    static_assert(std::is_same<int, TypeAt<TwoElem, 0>::Result>::value);
+    static_assert(std::is_same<char, TypeAt<TwoElem, 1>::Result>::value);
+    
+    static_assert(std::is_same<int, TypeAt<ThreeElem, 0>::Result>::value);
+    static_assert(std::is_same<char, TypeAt<ThreeElem, 1>::Result>::value);
+    static_assert(std::is_same<std::string, TypeAt<ThreeElem, 2>::Result>::value);
 }
